@@ -1,0 +1,114 @@
+﻿@model Stok_Takip.Models.StockUnit
+
+@{
+
+    IEnumerable<StockType> stockTypes = ViewData["StockTypes"] as IEnumerable<StockType>;
+    IEnumerable<QuantityUnit> quantityUnits = ViewData["QuantityUnits"] as IEnumerable<QuantityUnit>;
+    IEnumerable<Currency> currencies = ViewData["Currencies"] as IEnumerable<Currency>;
+}
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    + Stok Birimi Ekle
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+            <form asp-action="Add" method="post" id="stockUnitForm">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Stok Birimi Ekle</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="unitCode">Stok Birimi Kodu</label>
+                            <input class="form-control" name="unitCode" id="unitCode" type="text" placeholder="Stok Birimi Kodu Ekleyiniz" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="stockTypeId">Stok Türü</label>
+                            <select name="stockTypeId" class="form-select" aria-label="Default select example">
+                                <option value="">Stok Türü Seçiniz</option>
+                               @foreach(StockType stockType in stockTypes){
+                                    <option  value="@stockType.Id">@stockType.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="quantityUnitId">Miktar Birimi</label>
+                            <select name="quantityUnitId" class="form-select" aria-label="Default select example">
+                                <option value="">Miktar Birimi Seçiniz</option>
+                                @foreach (QuantityUnit quantityUnit in quantityUnits)
+                                {
+                                    <option  value="@quantityUnit.Id">@quantityUnit.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="description">Açıklama</label>
+                            <input class="form-control" name="description" id="description" type="text" placeholder="Açıklama Ekleyiniz" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="purchasePrice">Alış Fiyatı</label>
+                            <input class="form-control" name="purchasePrice" id="purchasePrice" type="number" placeholder="Alış Fiyatı Ekleyiniz" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="purchaseCurrencyId">Alış Fiyatı Para Birimi</label>
+                            <select name="purchaseCurrencyId" class="form-select" aria-label="Default select example">
+                                <option value="">Alış Fiyatı Para Birimi</option>
+                                @foreach (Currency currency in currencies)
+                                {
+                                    <option  value="@currency.Id">@currency.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="salePrice">Satış Fiyatı</label>
+                            <input class="form-control" name="salePrice" id="salePrice" type="number" placeholder="Satış Alış Fiyatı Ekleyiniz" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="salesCurrencyId">Satış Fiyatı Para Birimi</label>
+                            <select name="salesCurrencyId" class="form-select" aria-label="Default select example">
+                                <option value="">Satış Fiyatı Para Birimi</option>
+                                @foreach (Currency currency in currencies)
+                                {
+                                    <option  value="@currency.Id">@currency.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="paperWeight">Kağıt Ağırlığı</label>
+                            <input class="form-control" name="paperWeight" id="paperWeight" type="number" placeholder="Kağıt Ağırlığı Ekleyiniz" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info text-light">Ekle</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">İptal</button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

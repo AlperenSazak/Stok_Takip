@@ -1,0 +1,36 @@
+﻿@model Stok_Takip.Models.StockType
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    + Stok Türü Ekle
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+            <form asp-action="Add" method="post" id="stockTypeForm">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Stok Türü Ekle</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+
+                    <label for="name">Stok Türü</label>
+                    <input class="form-control" name="name" id="name" type="text" placeholder="isim ekleyiniz" />
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info text-light">Ekle</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">İptal</button>
+
+                </div>
+            </form>
+       
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+    </script>
+}

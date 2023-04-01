@@ -1,0 +1,97 @@
+﻿@model Stok_Takip.Models.Stock
+
+@{
+
+    IEnumerable<StockClass> stockClasses = ViewData["StockClasses"] as IEnumerable<StockClass>;
+    IEnumerable<StockType> stockTypes = ViewData["StockTypes"] as IEnumerable<StockType>;
+    IEnumerable<StockUnit> stockUnits = ViewData["StockUnits"] as IEnumerable<StockUnit>;
+    IEnumerable<QuantityUnit> quantityUnits = ViewData["QuantityUnits"] as IEnumerable<QuantityUnit>;
+}
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    + Stok Ekle
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+            <form asp-action="Add" method="post" id="stockForm">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Stok Ekle</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="stockClassId">Stok Sınıfı</label>
+                            <select name="stockClassId" class="form-select" aria-label="Default select example">
+                                <option value="">Stok Sınıfı Seçiniz</option>
+                                @foreach (StockClass stockClass in stockClasses)
+                                {
+                                    <option value="@stockClass.Id">@stockClass.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="stockTypeId">Stok Türü</label>
+                            <select name="stockTypeId" class="form-select" aria-label="Default select example">
+                                <option value="">Stok Türü Seçiniz</option>
+                                @foreach (StockType stockType in stockTypes)
+                                {
+                                    <option value="@stockType.Id">@stockType.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="stockUnitId">Stok Birim Adı</label>
+                            <select name="stockUnitId" class="form-select" aria-label="Default select example">
+                                <option value="">Stok Birim Adı Seçiniz</option>
+                                @foreach (StockUnit stockUnit in stockUnits)
+                                {
+                                    <option value="@stockUnit.Id">@stockUnit.UnitCode</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="amount">Miktar</label>
+                            <input class="form-control" name="amount" id="amount" type="number" placeholder="Miktar Ekleyiniz" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="shelfInfo">Raf Bilgisi</label>
+                            <input class="form-control" name="shelfInfo" id="shelfInfo" type="text" placeholder=" " />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="cupBoardInfo">Dolap Bilgisi</label>
+                            <input class="form-control" name="cupBoardInfo" id="cupBoardInfo" type="text" placeholder=" " />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="criticalAmount">Kritik Miktar</label>
+                            <input class="form-control" name="criticalAmount" id="criticalAmount" type="number" placeholder=" " />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info text-light">Ekle</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">İptal</button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

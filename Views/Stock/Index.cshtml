@@ -1,0 +1,181 @@
+﻿<div class="container-fluid">
+    <div class="row my-4">
+        <div class="col-md-6 text-start">
+            <h5>Stok Listesi</h5>
+
+        </div>
+        <div class="col-md-6 text-end">
+            <partial name="_AddStockModal.cshtml" />
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table" id="stock_tbl">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Birim Kodu</th>
+                        <th scope="col">Birim Açıklaması</th>
+                        <th scope="col">Stok Türü</th>
+                        <th scope="col">Toplam Stok Miktarı</th>
+                        <th scope="col">Kritik Miktar</th>
+                        <th scope="col">İşlemler</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            getStockTable();
+
+            if ('@ViewBag.Message' != "") {
+                Swal.fire(
+                    'Başarılı.',
+                    '@ViewBag.Message',
+                    'success'
+                )
+            }
+            if ('@ViewBag.Error' != "") {
+                Swal.fire(
+                    'Başarısız.',
+                    '@ViewBag.Error',
+                    'error'
+                )
+            }
+
+            // get table
+            function getStockTable() {
+                console.log('çalıştı')
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Stock/GetAll',
+                    success: function (data) {
+                        console.log(data);
+                        var dataTable = $("#stock_tbl").DataTable();
+                        dataTable.clear().draw();
+                        $.each(data, function (index, data) {
+                            dataTable.row.add([
+                                data.unitCode,
+                                data.description,
+                                data.stockType,
+                                data.totalStockAmount,
+                                data.criticalAmount,
+                                '<a href="/Stock/Update/id?id=' + data.id + '" class="btn btn-update"><i class="fa-solid fa-gear"></i></a> <button class="btn btn-delete" value='+ data.id +'><i class="fa-solid fa-trash"></i></button>'
+                            ]).draw();
+                         
+                        });
+
+                    },
+                    error: function (data, message) {
+
+                        console.log(data, message)
+                    }
+                });
+            }
+            //validation start
+            $("#stockForm").validate({
+                rules: {
+                    "stockClassId": {
+                        required: true
+                    },
+                    "stockTypeId": {
+                        required: true                        
+                    },
+                    "stockUnitId": {
+                        required: true
+                    },
+                    "amount": {
+                        required: true,
+
+                    },
+                    "shelfInfo": {
+                        required: true
+                    },
+                    "cupBoardInfo": {
+                        required: true
+                    },
+                    "criticalAmount": {
+                        required: true
+                    }
+                },
+                    messages: {
+                    "stockClassId": {
+                        required: "Lütfen Stok Sınıfı Seçiniz"
+                    },
+                    "stockTypeId": {
+                        required: "Lütfen Bir Stok Türü Seçiniz"
+                    },
+                    "stockUnitId": {
+                        required: "Lütfen Stok Birim Adı Seçiniz"
+                    },
+                    "amount": {
+                        required: "Lütfen Bir Miktar Giriniz",
+
+                    },
+                    "shelfInfo": {
+                        required: "Lütfen Bir Raf Bilgisi Giriniz"
+                    },
+                    "cupBoardInfo": {
+                        required: "Lütfen Bir Dolap Bilgisi Giriniz"
+                    },
+                    "criticalAmount": {
+                        required: "Lütfen Bir Kritik Miktarı Giriniz"
+                    }                        
+                  },
+                    wrap: 'div',
+                    errorPlacement: function (error, element) {
+                        error.css({ 'margin-top': '10px' });
+                        error.addClass("arrow alert alert-danger")
+                        error.insertAfter(element);
+                    }
+            });
+            //validation end
+            //delete start
+
+            $("#stock_tbl").on("click",".btn-delete", function(){
+                var id= $(this).val()
+                Swal.fire({
+                    title: 'Emin misiniz?',
+                    text: "Kaydı silmek üzeresiniz! Bu kayıt başka bir tabloda ikincil anahtar olabilir ve o kaydın da silinmesine yol açabilir. Yine de silelim mi?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Evet, silelim!',
+                    cancelButtonText: 'iptal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                           url:'Stock/Delete/?id='+ id,
+                           type: 'DELETE',
+                           success:function(response){
+                                Swal.fire(
+                                    'Başarılı!',
+                                    'Kayıt Silindi',
+                                    'success'
+                                );
+                                getStockTable()
+                           },
+                            error: function (xhr) {
+
+                                console.log(xhr.responseText);
+                            }
+                        })
+
+                    }
+                })
+            })
+
+            //delete end
+        })
+    </script>
+
+}

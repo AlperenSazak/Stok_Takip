@@ -1,0 +1,86 @@
+﻿@model Stock
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" id="updateStockForm" class="update-form" asp-action="UpdateStock">
+                        <input type="hidden" name="id" value="@Model.Id" />
+
+                        <div class="form-group">
+                            <label for="amount">Miktar</label>
+                            <input type="text" disabled class="form-control" value="@Model.Amount" />
+                            <input type="number" name="amount" id="amount" class="form-control mt-2" placeholder="Miktar" value="@Model.Amount" />
+                        </div>
+                        <div class="form-group">
+                            <label for="shelfInfo">Raf Bilgisi</label>
+                            <input type="text" name="shelfInfo" id="shelfInfo" class="form-control" placeholder="Raf Bilgisi" value="@Model.ShelfInfo" />
+                        </div>
+                        <div class="form-group">
+                            <label for="CupBoardInfo">Dolap Bilgisi</label>
+                            <input type="text" name="cupBoardInfo" id="cupBoardInfo" class="form-control" placeholder="Dolap Bilgisi" value="@Model.CupBoardInfo" />
+                        </div>
+                        <div class="form-group">
+                            <label for="criticalAmount">Kritik Miktar</label>
+                            <input type="text" disabled class="form-control" value="@Model.CriticalAmount" />
+                            <input type="number" name="criticalAmount" id="criticalAmount" class="form-control" placeholder="Kritik Miktar" value="@Model.CriticalAmount" />
+                        </div>
+
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function(){
+            $("#updateStockForm").validate({
+                rules: {
+                    
+                    "amount": {
+                        required: true,
+                        number: true
+                    },
+                    "shelfInfo": {
+                        required: true
+                    },
+                    "cupBoardInfo": {
+                        required: true
+                    },
+                    "criticalAmount": {
+                        required: true,
+                        number: true
+                    }
+                },
+                messages: {
+                    
+                    "amount": {
+                        required: "Lütfen Bir Miktar Giriniz",
+                        
+                    },
+                    "shelfInfo": {
+                        required: "Lütfen Bir Raf Bilgisi Giriniz"
+                    },
+                    "cupBoardInfo": {
+                        required: "Lütfen Bir Dolap Bilgisi Giriniz"
+                    },
+                    "criticalAmount": {
+                        required: "Lütfen Bir Kritik Miktarı Giriniz"
+                    }
+                },
+                wrap: 'div',
+                errorPlacement: function (error, element) {
+                    error.css({ 'margin-top': '10px' });
+                    error.addClass("arrow alert alert-danger")
+                    error.insertAfter(element);
+                }
+            });
+        })
+    </script>
+}

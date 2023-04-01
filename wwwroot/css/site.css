@@ -1,0 +1,65 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+.navbar-light{
+    background-color:rgb(15, 11, 42) !important;
+    
+}
+.navbar-light a {
+        color: white !important;
+}
+thead{
+    background-color:rgb(225, 225, 225) !important;
+}
+td{
+    vertical-align:middle;
+}
+table{
+    text-align:center;
+    border:none !important;
+}
+table, th, td {
+    border: 1px solid rgb(232, 232, 232) !important;
+    border-collapse: collapse !important;
+}
+.btn-update {
+    border: 1px solid #B9E9FC !important;
+    border-radius: 50% !important;
+    color: #258cfb !important
+}
+.btn-delete {
+    border: 1px solid #ff256f !important;
+    border-radius: 50% !important;
+    color: #ff68bb !important
+}
+.bg-purchase a{
+    background-color:rgb(74, 46, 255);
+    padding: 5px 15px 5px 15px;
+    border-radius:30px;
+    color:white !important;
+}
+.bg-sale a {
+    background-color: rgb(251, 230, 0);
+    padding: 5px 15px 5px 15px;
+    border-radius: 30px;
+    color: black !important;
+}
